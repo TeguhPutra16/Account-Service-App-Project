@@ -2,7 +2,6 @@ package main
 
 import (
 	"be13/project/config"
-
 	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"

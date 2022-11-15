@@ -8,6 +8,7 @@ import (
 )
 
 func Connection() *sql.DB {
+	// os.Getenv("DB_CONNECTION")
 	var connectionString = os.Getenv("DB_CONNECTION")
 	db, err := sql.Open("mysql", connectionString)
 	if err != nil {
