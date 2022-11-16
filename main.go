@@ -48,12 +48,13 @@ func main() {
 	case 2:
 		{
 			loginAccount := entities.Users{}
+			var pass string
 			fmt.Println("\nEnter your Telp number:")
 			fmt.Scanln(&loginAccount.Telp_number)
 			fmt.Println("Enter your Password:")
-			fmt.Scanln(&loginAccount.Password)
+			fmt.Scanln(&pass)
 
-			controllers.LoginAccount(dbConnection, loginAccount)
+			controllers.LoginAccount(dbConnection, loginAccount, pass)
 		}
 	case 3:
 		{

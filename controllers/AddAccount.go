@@ -9,8 +9,8 @@ import (
 )
 
 func Addaccount(db *sql.DB, insert entities.Users) error {
-	// x := Bcript(insert.Password)
-	// insert.Password = x
+	x := Bcript(insert.Password)
+	insert.Password = x
 	var query = "insert into users (name,email,password,address,telp_number,balance,gender) values (?,?,?,?,?,?,?)"
 	statement, errPrepare := db.Prepare(query)
 	if errPrepare != nil {
