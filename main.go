@@ -54,7 +54,7 @@ func main() {
 
 		v := controllers.ReadAccount(dbConnection, NoId)
 
-		fmt.Printf("Id:%d	Name:%s	Email:%s	Password:%s	Address:%s	Balance:%d	Gender:%s	Telephone:%s\n", v.Id, v.Name, v.Email, v.Password, v.Address, v.Balance, v.Gender, v.Telp_number)
+		fmt.Printf("Id:%d	Name:%s	Email:%s	Password:%s	Address:%s	Balance:%d	Gender:%s	Telephone:%s	date:%s\n", v.Id, v.Name, v.Email, v.Password, v.Address, v.Balance, v.Gender, v.Telp_number, v.Created_at)
 
 	case 4:
 

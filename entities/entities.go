@@ -1,5 +1,7 @@
 package entities
 
+import "time"
+
 type Users struct {
 	Id          int
 	Name        string
@@ -9,8 +11,8 @@ type Users struct {
 	Telp_number string
 	Balance     int
 	Gender      string
-	// Created_at  time.Time
-	// Updated_at  time.Time
+	Created_at  time.Time
+	Updated_at  time.Time
 }
 
 type Transaction struct {

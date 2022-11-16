@@ -7,10 +7,10 @@ import (
 )
 
 func ReadAccount(db *sql.DB, Id entities.Users) entities.Users {
-	result := db.QueryRow("SELECT id,name,email,gender,address,telp_number,balance,password FROM users where id=?", Id.Id)
+	result := db.QueryRow("SELECT id,name,email,gender,address,telp_number,balance,password,created_at FROM users where id=?", Id.Id)
 
 	var userrow entities.Users
-	errScan := result.Scan(&userrow.Id, &userrow.Name, &userrow.Email, &userrow.Gender, &userrow.Address, &userrow.Telp_number, &userrow.Balance, &userrow.Password)
+	errScan := result.Scan(&userrow.Id, &userrow.Name, &userrow.Email, &userrow.Gender, &userrow.Address, &userrow.Telp_number, &userrow.Balance, &userrow.Password, &userrow.Created_at)
 	if errScan != nil {
 		if errScan == sql.ErrNoRows {
 			log.Fatal("Id tdk ada")
