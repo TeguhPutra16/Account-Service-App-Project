@@ -8,7 +8,6 @@ import (
 )
 
 func Connection() *sql.DB {
-	// os.Getenv("DB_CONNECTION")
 	var connectionString = os.Getenv("DB_CONNECTION")
 	db, err := sql.Open("mysql", connectionString)
 	if err != nil {
@@ -19,7 +18,7 @@ func Connection() *sql.DB {
 	if errPing != nil {
 		log.Fatal("Error connect to db", errPing.Error())
 	} else {
-		fmt.Println("Koneksi berhasil")
+		fmt.Println("successful connection")
 	}
 	return db
 
