@@ -73,7 +73,7 @@ func BalanceTopUp(db *sql.DB, topupuserNumber string, topupamount int) {
 
 	result4, errExec3 := statement3.Exec(topupamount)
 	if errExec3 != nil {
-		log.Fatal("error exec insert", errExec.Error())
+		log.Fatal("error exec insert", errExec3.Error())
 	} else {
 		row, _ := result4.RowsAffected()
 		if row > 0 {

@@ -132,10 +132,12 @@ func main() {
 						case 6:
 							{
 								user := entities.Users{}
-								fmt.Println("\nEnter Id to look TopUp History:")
+								fmt.Println("\nEnter User Id to look TopUp History:")
 								fmt.Scanln(&user.Id)
-
-								controllers.TopUpHistory(dbConnection, user)
+								cek := controllers.TopUpHistory(dbConnection, user)
+								if len(cek) == 0 {
+									log.Fatal("User Id TopUp History not found")
+								}
 							}
 						case 7:
 							{
