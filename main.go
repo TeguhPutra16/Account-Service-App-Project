@@ -13,147 +13,167 @@ import (
 func main() {
 	dbConnection := config.Connection()
 
-	defer dbConnection.Close()
+	for {
+		fmt.Println("\nMENU:\n1. ADD ACCOUNT\n2. LOGIN\n0. Exit")
+		fmt.Println("\nMasukkan pilihan anda: ")
+		var pilihan int
+		fmt.Scanln(&pilihan)
 
-	fmt.Println("\nMENU:\n1. ADD ACCOUNT\n2. LOGIN\n3. READ ACCOUNT\n4. UPDATE ACCOUNT\n5. DELETE ACCOUT\n6. BALANCE TOP UP\n7. BALANCE TRANSFER\n8. BALANCE TOP UP HISTORY\n9. BALANCE TRANSFER HISTORY\n10. READ ANOTHER USER PROFILE\n0. EXIT")
-	fmt.Println("\nMasukkan pilihan anda: ")
-	var pilihan int
-	fmt.Scanln(&pilihan)
+		switch pilihan {
+		case 1:
+			addAccount := entities.Users{}
 
-	switch pilihan {
-	case 1:
-		addAccount := entities.Users{}
+			fmt.Println("\nEnter your Name:")
+			fmt.Scanln(&addAccount.Name)
+			fmt.Println("Enter your Email:")
+			fmt.Scanln(&addAccount.Email)
+			fmt.Println("Insert Password:")
+			fmt.Scanln(&addAccount.Password)
+			fmt.Println("Enter your Address:")
+			fmt.Scanln(&addAccount.Address)
+			fmt.Println("Telephone Number:")
+			fmt.Scanln(&addAccount.Telp_number)
+			fmt.Println("your Balance:")
+			fmt.Scanln(&addAccount.Balance)
+			fmt.Println("Gender (M/F):")
+			fmt.Scanln(&addAccount.Gender)
 
-		fmt.Println("Masukan nama")
-		fmt.Scanln(&addAccount.Name)
-		fmt.Println("Masukan Email")
-		fmt.Scanln(&addAccount.Email)
-		fmt.Println("Masukan Password")
-		fmt.Scanln(&addAccount.Password)
-		fmt.Println("Masukan Alamat")
-		fmt.Scanln(&addAccount.Address)
-		fmt.Println("Masukan No.Telepon")
-		fmt.Scanln(&addAccount.Telp_number)
-		fmt.Println("Masukan Balance")
-		fmt.Scanln(&addAccount.Balance)
-		fmt.Println("Jenis Kelamin")
-		fmt.Scanln(&addAccount.Gender)
-
-		err := controllers.Addaccount(dbConnection, addAccount)
-		if err != nil {
-			log.Fatal("Failed to create Account")
-
-		}
-
-	case 2:
-		{
-			loginAccount := entities.Users{}
-			var pass string
-			fmt.Println("\nEnter your Telp number:")
-			fmt.Scanln(&loginAccount.Telp_number)
-			fmt.Println("Enter your Password:")
-			fmt.Scanln(&pass)
-
-			controllers.LoginAccount(dbConnection, loginAccount, pass)
-		}
-	case 3:
-		{
-
-			NoId := entities.Users{}
-			fmt.Println("masukkan id user")
-			fmt.Scanln(&NoId.Id)
-
-			v := controllers.ReadAccount(dbConnection, NoId)
-
-			fmt.Printf("Id:%d	Name:%s	Email:%s	Password:%s	Address:%s	Balance:%d	Gender:%s	Telephone:%s	date:%s\n", v.Id, v.Name, v.Email, v.Password, v.Address, v.Balance, v.Gender, v.Telp_number, v.Created_at)
-
-		}
-	case 4:
-		{
-			updateAccount := entities.Users{}
-			fmt.Println("\nEnter the user id you want to update:")
-			fmt.Scanln(&updateAccount.Id)
-			fmt.Println("Enter name update:")
-			fmt.Scanln(&updateAccount.Name)
-			fmt.Println("Enter gender update (M/F):")
-			fmt.Scanln(&updateAccount.Gender)
-			fmt.Println("Enter address update:")
-			fmt.Scanln(&updateAccount.Address)
-			fmt.Println("Enter email update:")
-			fmt.Scanln(&updateAccount.Email)
-			fmt.Println("Enter telp number update:")
-			fmt.Scanln(&updateAccount.Telp_number)
-			fmt.Println("Enter password update:")
-			fmt.Scanln(&updateAccount.Password)
-
-			controllers.UpdateAccount(dbConnection, updateAccount)
-		}
-	case 5:
-		delete := entities.Users{}
-		fmt.Println("Masukkan id user yang akan di hapus")
-		fmt.Scanln(&delete.Id)
-
-		errdelete := controllers.DeleteAccount(dbConnection, delete)
-		if errdelete != nil {
-			fmt.Println("Delete Failed")
-		}
-
-	case 6:
-		{
-			var topupuserNumber string
-			var topupamount int
-			fmt.Println("Enter your Telp number to Top up:")
-			fmt.Scanln(&topupuserNumber)
-			fmt.Println("Enter the top up nominal:")
-			fmt.Scanln(&topupamount)
-
-			controllers.BalanceTopUp(dbConnection, topupuserNumber, topupamount)
-
-		}
-	case 7:
-
-		var nomor, nomor1 string
-		var Jum_Tf int
-
-		fmt.Println("masukkan nomor anda")
-		fmt.Scanln(&nomor)
-		fmt.Println("masukkan nomor penerima")
-		fmt.Scanln(&nomor1)
-		fmt.Println("masukkan nominal Transfer")
-		fmt.Scanln(&Jum_Tf)
-
-		controllers.Transfer(dbConnection, nomor, nomor1, Jum_Tf)
-	case 8:
-		{
-			user := entities.Users{}
-			fmt.Println("\nEnter Id to look TopUp History:")
-			fmt.Scanln(&user.Id)
-
-			controllers.TopUpHistory(dbConnection, user)
-		}
-	case 9:
-		{
-			history := entities.Users{}
-			fmt.Println("Masukan users id")
-			fmt.Scanln(&history.Id)
-			cek := controllers.TransferHistory(dbConnection, history)
-			if len(cek) == 0 {
-				log.Fatal("History not Found")
+			err := controllers.Addaccount(dbConnection, addAccount)
+			if err != nil {
+				log.Fatal("Failed to create Account")
 
 			}
 
-		}
-	case 10:
-		{
-			readUser := entities.Users{}
-			fmt.Println("\nEnter id:")
-			fmt.Scanln(&readUser.Id)
+		case 2:
+			{
+				loginAccount := entities.Users{}
+				var pass string
+				fmt.Println("\nEnter your Telp number:")
+				fmt.Scanln(&loginAccount.Telp_number)
+				fmt.Println("Enter your Password:")
+				fmt.Scanln(&pass)
 
-			controllers.ReadAnotherUserProfile(dbConnection, readUser)
-		}
-	case 0:
-		{
+				read, errLogin := controllers.LoginAccount(dbConnection, loginAccount, pass)
+
+				if errLogin != nil {
+
+					log.Fatal("Login Failed")
+				} else {
+					for {
+						fmt.Println()
+						fmt.Println("Menu: \n1. READ ACCOUNT\n2. UPDATE ACCOUNT\n3. DELETE ACCOUT\n4. TOP UP\n5. TRANSFER\n6. TOP UP HISTORY\n7. TRANSFER HISTORY\n8. READ ANOTHER USER PROFILE\n0. EXIT")
+						fmt.Println("\nChoose Menu: ")
+						var pilihan int
+						fmt.Scanln(&pilihan)
+						switch pilihan {
+						case 1:
+							{
+
+								v := controllers.ReadAccount(dbConnection, read)
+
+								fmt.Printf("\n\n===================\nUser Id: %d\nName: %s\nEmail: %s\nUser Balance: %d\nAddress: %s\nGender: %s\nTelephone:%s\n===================", v.Id, v.Name, v.Email, v.Balance, v.Address, v.Gender, v.Telp_number)
+
+							}
+						case 2:
+							{
+								updateAccount := entities.Users{}
+								fmt.Println("\nEnter the user id you want to update:")
+								fmt.Scanln(&updateAccount.Id)
+								fmt.Println("Enter name update:")
+								fmt.Scanln(&updateAccount.Name)
+								fmt.Println("Enter gender update (M/F):")
+								fmt.Scanln(&updateAccount.Gender)
+								fmt.Println("Enter address update:")
+								fmt.Scanln(&updateAccount.Address)
+								fmt.Println("Enter email update:")
+								fmt.Scanln(&updateAccount.Email)
+								fmt.Println("Enter telp number update:")
+								fmt.Scanln(&updateAccount.Telp_number)
+								fmt.Println("Enter password update:")
+								fmt.Scanln(&updateAccount.Password)
+
+								controllers.UpdateAccount(dbConnection, updateAccount)
+							}
+						case 3:
+							delete := entities.Users{}
+							fmt.Println("Enter user id you want to delete:")
+							fmt.Scanln(&delete.Id)
+
+							errdelete := controllers.DeleteAccount(dbConnection, delete)
+							if errdelete != nil {
+								fmt.Println("Delete Failed")
+							}
+
+						case 4:
+							{
+								var topupuserNumber string
+								var topupamount int
+								fmt.Println("\nEnter your Telp number to Top up:")
+								fmt.Scanln(&topupuserNumber)
+								fmt.Println("Enter the top up nominal:")
+								fmt.Scanln(&topupamount)
+
+								controllers.BalanceTopUp(dbConnection, topupuserNumber, topupamount)
+
+							}
+						case 5:
+
+							var nomor, nomor1 string
+							var Jum_Tf int
+
+							fmt.Println("\nEnter your Phone number:")
+							fmt.Scanln(&nomor)
+							fmt.Println("Enter recipient number:")
+							fmt.Scanln(&nomor1)
+							fmt.Println("Transfer amount:")
+							fmt.Scanln(&Jum_Tf)
+
+							controllers.Transfer(dbConnection, nomor, nomor1, Jum_Tf)
+						case 6:
+							{
+								user := entities.Users{}
+								fmt.Println("\nEnter Id to look TopUp History:")
+								fmt.Scanln(&user.Id)
+
+								controllers.TopUpHistory(dbConnection, user)
+							}
+						case 7:
+							{
+								history := entities.Users{}
+								fmt.Println("Enter user id")
+								fmt.Scanln(&history.Id)
+								cek := controllers.TransferHistory(dbConnection, history)
+								if len(cek) == 0 {
+									log.Fatal("History not Found")
+
+								}
+
+							}
+						case 8:
+							{
+								readUser := entities.Users{}
+								fmt.Println("\nEnter user id:")
+								fmt.Scanln(&readUser.Id)
+
+								controllers.ReadAnotherUserProfile(dbConnection, readUser)
+							}
+						case 0:
+							{
+								controllers.Exit()
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+		case 0:
+			controllers.Exit()
 
 		}
+
 	}
 }
