@@ -132,6 +132,10 @@ func main() {
 		}
 	case 9:
 		{
+			history := entities.Users{}
+			fmt.Println("Masukan users id")
+			fmt.Scanln(&history.Id)
+			controllers.TransferHistory(dbConnection, history)
 
 		}
 	case 10:
