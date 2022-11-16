@@ -135,7 +135,11 @@ func main() {
 			history := entities.Users{}
 			fmt.Println("Masukan users id")
 			fmt.Scanln(&history.Id)
-			controllers.TransferHistory(dbConnection, history)
+			cek := controllers.TransferHistory(dbConnection, history)
+			if len(cek) == 0 {
+				log.Fatal("History not Found")
+
+			}
 
 		}
 	case 10:
