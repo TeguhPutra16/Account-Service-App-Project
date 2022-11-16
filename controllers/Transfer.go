@@ -94,7 +94,7 @@ func Transfer(db *sql.DB, noTelp_kirim, noTelp_terima string, jumlahTf int) stri
 	}
 
 	/////////////////////////////////////////////////////INSERT KE TRANSAKSI///////////////////////
-	var query2 = "insert into transactions (user_id,transaction_name) values (?,?)"
+	var query2 = "insert into transactions_tf (user_id,transaction_name) values (?,?)"
 	statement2, errPrepare2 := db.Prepare(query2)
 	if errPrepare2 != nil {
 		log.Fatal("error prepare insert", errPrepare.Error())
@@ -129,7 +129,8 @@ func Transfer(db *sql.DB, noTelp_kirim, noTelp_terima string, jumlahTf int) stri
 	} else {
 		row, _ := result5.RowsAffected()
 		if row > 0 {
-			fmt.Println("Transfer berhasil diterima oleh Nomor :", noTelp_terima)
+
+			fmt.Println("\nTransfer berhasil diterima oleh Nomor :", noTelp_terima)
 		} else {
 			fmt.Println("Failed to Add Account")
 		}

@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"time"
 )
 
 func BalanceTopUp(db *sql.DB, topupuserNumber string, topupamount int) {
@@ -46,14 +45,14 @@ func BalanceTopUp(db *sql.DB, topupuserNumber string, topupamount int) {
 	}
 
 	// melengkapi tabel transaction
-	var query2 = "insert into transactions (user_id, transaction_name, transaction_date) values (?,?,?)"
-	now := time.Now()
+	var query2 = "insert into transactions_tp (user_id, transaction_name) values (?,?)"
+	// now := time.Now()
 	statement2, errPrepare2 := db.Prepare(query2)
 	if errPrepare2 != nil {
 		log.Fatal("error prepare insert", errPrepare2.Error())
 	}
 
-	result3, errExec2 := statement2.Exec(topupUser.Id, "topup", now)
+	result3, errExec2 := statement2.Exec(topupUser.Id, "Top_Up")
 	if errExec2 != nil {
 		log.Fatal("error exec insert", errExec2.Error())
 	} else {

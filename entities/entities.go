@@ -15,7 +15,13 @@ type Users struct {
 	Updated_at  time.Time
 }
 
-type Transaction struct {
+type Transaction_tp struct {
+	Id               int
+	User_id          int
+	Transaction_name string
+	Created_at       time.Time
+}
+type Transaction_tf struct {
 	Id               int
 	User_id          int
 	Transaction_name string

@@ -8,7 +8,7 @@ import (
 )
 
 func TransferHistory(db *sql.DB, user entities.Users) []entities.Users {
-	result, errSelect := db.Query("select users.id ,users.name,transactions.transaction_name,transactions.id,transfers.transfer_amount,u.name,transactions.created_at from users inner join transactions on users.id=transactions.user_id inner join transfers on transactions.id=transfers.transaction_id inner join users u on u.id=transfers.user_id where users.id=?", user.Id)
+	result, errSelect := db.Query("select users.id ,users.name,transactions_tf.transaction_name,transactions_tf.id,transfers.transfer_amount,u.name,transactions_tf.created_at from users inner join transactions_tf on users.id=transactions_tf.user_id inner join transfers on transactions_tf.id=transfers.transaction_tf_id inner join users u on u.id=transfers.user_id where users.id=?", user.Id)
 	if errSelect != nil {
 		// return errSelect
 		// return nil, errSelect
@@ -19,7 +19,7 @@ func TransferHistory(db *sql.DB, user entities.Users) []entities.Users {
 	for result.Next() {
 		var penerima entities.Users
 		var pengirim entities.Users
-		var transaksi entities.Transaction
+		var transaksi entities.Transaction_tf
 		var transfer entities.Transfer
 
 		errScan := result.Scan(&pengirim.Id, &pengirim.Name, &transaksi.Transaction_name, &transaksi.Id, &transfer.Transfer_amount, &penerima.Name, &transaksi.Created_at)
