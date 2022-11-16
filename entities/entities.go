@@ -19,7 +19,7 @@ type Transaction struct {
 	Id               int
 	User_id          int
 	Transaction_name string
-	Transaction_date time.Time
+	Created_at       time.Time
 }
 
 type Top_up struct {
