@@ -16,7 +16,7 @@ func Transfer(db *sql.DB, noTelp_kirim, noTelp_terima string, jumlahTf int) stri
 	errScan := result.Scan(&pengirim.Id, &pengirim.Balance)
 	if errScan != nil {
 		if errScan == sql.ErrNoRows {
-			log.Fatal("Id pengirim tdk ada")
+			log.Fatal("Id pengirim tidak ada")
 		} else {
 			log.Fatal("eror scan", errScan.Error())
 		}
@@ -35,7 +35,7 @@ func Transfer(db *sql.DB, noTelp_kirim, noTelp_terima string, jumlahTf int) stri
 	errScan1 := result1.Scan(&penerima.Id, &penerima.Balance)
 	if errScan1 != nil {
 		if errScan1 == sql.ErrNoRows {
-			log.Fatal("Id penerima tdk ada")
+			log.Fatal("Id penerima tidak ada")
 		} else {
 			log.Fatal("eror scan", errScan.Error())
 		}

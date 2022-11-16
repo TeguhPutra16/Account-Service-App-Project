@@ -19,7 +19,7 @@ func ReadAccount(db *sql.DB, Id entities.Users) entities.Users {
 		}
 
 	}
-	// fmt.Printf("id:%s  nama:%s  email: %s Domisili:%s\n", userrow.Id, userrow.Nama, userrow.Email, userrow.Domisili)
+
 	return userrow
 
 }

@@ -23,19 +23,19 @@ func main() {
 	case 1:
 		addAccount := entities.Users{}
 
-		fmt.Println("Masukan Nama")
+		fmt.Println("Masukan nama")
 		fmt.Scanln(&addAccount.Name)
 		fmt.Println("Masukan Email")
 		fmt.Scanln(&addAccount.Email)
 		fmt.Println("Masukan Password")
 		fmt.Scanln(&addAccount.Password)
-		fmt.Println("Masukan Address")
+		fmt.Println("Masukan Alamat")
 		fmt.Scanln(&addAccount.Address)
 		fmt.Println("Masukan No.Telepon")
 		fmt.Scanln(&addAccount.Telp_number)
 		fmt.Println("Masukan Balance")
 		fmt.Scanln(&addAccount.Balance)
-		fmt.Println("Masukan Gender")
+		fmt.Println("Jenis Kelamin")
 		fmt.Scanln(&addAccount.Gender)
 
 		err := controllers.Addaccount(dbConnection, addAccount)
@@ -80,11 +80,7 @@ func main() {
 		fmt.Println("masukkan nominal Transfer")
 		fmt.Scanln(&Jum_Tf)
 
-		v := controllers.Transfer(dbConnection, nomor, nomor1, Jum_Tf)
-
-		fmt.Println(v)
-
-		// fmt.Printf("Id:%d	Balance:%d\n", v.Id, v.Balance)
+		controllers.Transfer(dbConnection, nomor, nomor1, Jum_Tf)
 
 	}
 
