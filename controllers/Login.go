@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"be13/account-service-app-project/entities"
+	"be13/project/entities"
 	"database/sql"
 	"fmt"
 	"log"
