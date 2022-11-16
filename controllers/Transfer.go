@@ -16,16 +16,15 @@ func Transfer(db *sql.DB, noTelp_kirim, noTelp_terima string, jumlahTf int) stri
 	errScan := result.Scan(&pengirim.Id, &pengirim.Balance)
 	if errScan != nil {
 		if errScan == sql.ErrNoRows {
-			log.Fatal("Id pengirim tidak ada")
+			log.Fatal("Sender Id does not exist")
 		} else {
 			log.Fatal("eror scan", errScan.Error())
 		}
-
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 	if pengirim.Balance-jumlahTf < 0 {
-		log.Fatal("Saldo tidak mencukupi")
+		log.Fatal("Less Balance")
 	}
 	////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////SALDO PENERIMA//////////////////////////////////
@@ -35,7 +34,7 @@ func Transfer(db *sql.DB, noTelp_kirim, noTelp_terima string, jumlahTf int) stri
 	errScan1 := result1.Scan(&penerima.Id, &penerima.Balance)
 	if errScan1 != nil {
 		if errScan1 == sql.ErrNoRows {
-			log.Fatal("Id penerima tidak ada")
+			log.Fatal("Sender Id does not exist")
 		} else {
 			log.Fatal("eror scan", errScan.Error())
 		}
@@ -64,7 +63,7 @@ func Transfer(db *sql.DB, noTelp_kirim, noTelp_terima string, jumlahTf int) stri
 			// fmt.Println("Transfer berhasil diterima oleh Nomor :", noTelp_terima)
 			// return ""
 		} else {
-			fmt.Println("Tambah saldo Gagal")
+			fmt.Println("Add Balance Failed")
 		}
 	}
 
@@ -89,7 +88,7 @@ func Transfer(db *sql.DB, noTelp_kirim, noTelp_terima string, jumlahTf int) stri
 			// fmt.Println("kurang saldo pengirim")
 
 		} else {
-			log.Fatal("Transfer Gagal")
+			log.Fatal("Transfer Failed")
 		}
 	}
 
@@ -130,12 +129,10 @@ func Transfer(db *sql.DB, noTelp_kirim, noTelp_terima string, jumlahTf int) stri
 		row, _ := result5.RowsAffected()
 		if row > 0 {
 
-			fmt.Println("\nTransfer berhasil diterima oleh Nomor :", noTelp_terima)
+			fmt.Println("\nTransfer successfully received by Number :", noTelp_terima)
 		} else {
 			fmt.Println("Failed to Add Account")
 		}
 	}
-
 	return ""
-
 }

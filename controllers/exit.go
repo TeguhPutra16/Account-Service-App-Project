@@ -8,7 +8,7 @@ import (
 func Exit() {
 	fmt.Println()
 
-	fmt.Println("Terimakasih telah bertransaksi :)")
+	fmt.Println("Thank You For Transacting :)")
 
 	os.Exit(0)
 

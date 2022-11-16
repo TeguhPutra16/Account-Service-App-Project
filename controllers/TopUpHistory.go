@@ -23,7 +23,7 @@ func TopUpHistory(db *sql.DB, user entities.Users) []entities.Users {
 			log.Fatal("error scan", errScan.Error())
 		}
 		history = append(history, user)
-		fmt.Printf("\nTransaction Id: %d, Transaction Name: %s, Transaction Date: %s, TopUp Amount: %d, Current Balance: %d, TopUpUser Name: %s, TopUpUser Id: %d", transaction.Id, transaction.Transaction_name, transaction.Created_at, topup.Top_up_amount, user.Balance, user.Name, user.Id)
+		fmt.Printf("\nTransaction Id: %d\nTransaction Name: %s\nTransaction Date: %s\nTopUp Amount: %d\nCurrent Balance: %d\nTopUpUser Name: %s\nTopUpUser Id: %d\n", transaction.Id, transaction.Transaction_name, transaction.Created_at, topup.Top_up_amount, user.Balance, user.Name, user.Id)
 	}
 	return history
 }

@@ -14,7 +14,7 @@ func ReadAccount(db *sql.DB, Id int) entities.Users {
 	errScan := result.Scan(&userrow.Id, &userrow.Name, &userrow.Email, &userrow.Gender, &userrow.Address, &userrow.Telp_number, &userrow.Balance, &userrow.Password, &userrow.Created_at)
 	if errScan != nil {
 		if errScan == sql.ErrNoRows {
-			log.Fatal("Id tdk ada")
+			log.Fatal("Id doesn't exist")
 		} else {
 			log.Fatal("eror scan", errScan.Error())
 		}

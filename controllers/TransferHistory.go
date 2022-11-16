@@ -30,7 +30,7 @@ func TransferHistory(db *sql.DB, user entities.Users) []entities.Users {
 		}
 		users = append(users, pengirim, penerima)
 
-		fmt.Printf("->> Id Pengirim:%d  Nama Pengirim:%s  Nama transaksi: %s  Id Transaksi:%d  Jumlah Transfer:%d Nama Penerima:%s Waktu Transaksi:%s \n\n", pengirim.Id, pengirim.Name, transaksi.Transaction_name, transaksi.Id, transfer.Transfer_amount, penerima.Name, transaksi.Created_at)
+		fmt.Printf("->> Sender Id:%d  Sender Name:%s  Transaction Name: %s  Transaction Id:%d  Transfer Amount:%d Recipient Name:%s Transaction Time:%s \n\n", pengirim.Id, pengirim.Name, transaksi.Transaction_name, transaksi.Id, transfer.Transfer_amount, penerima.Name, transaksi.Created_at)
 
 	}
 	return users
