@@ -8,6 +8,7 @@ import (
 )
 
 func LoginAccount(db *sql.DB, loginAccount entities.Users) {
+	// login untuk 1 account
 	result := db.QueryRow("select id, name, gender, address, email, telp_number, password, balance, created_at, updated_at from users where telp_number = ? and password = ?", loginAccount.Telp_number, loginAccount.Password)
 	errScan := result.Scan(&loginAccount.Id, &loginAccount.Name, &loginAccount.Gender, &loginAccount.Address, &loginAccount.Email, &loginAccount.Telp_number, &loginAccount.Password, &loginAccount.Balance, &loginAccount.Created_at, &loginAccount.Updated_at)
 	if errScan != nil {

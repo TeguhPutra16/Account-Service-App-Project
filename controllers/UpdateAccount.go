@@ -8,6 +8,7 @@ import (
 )
 
 func UpdateAccount(db *sql.DB, updateAccount entities.Users) {
+	// update account berdasarkan id yg ingin di update
 	var query = "update users set name = ?, gender = ?, address = ?, email = ?, telp_number = ?, password = ? where id = ?"
 	statement, errPrepare := db.Prepare(query)
 	if errPrepare != nil {

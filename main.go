@@ -64,6 +64,14 @@ func main() {
 		}
 	case 6:
 		{
+			var topupuserNumber string
+			var topupamount int
+			fmt.Println("Enter your Telp number to Top up:")
+			fmt.Scanln(&topupuserNumber)
+			fmt.Println("Enter the top up nominal:")
+			fmt.Scanln(&topupamount)
+
+			controllers.BalanceTopUp(dbConnection, topupuserNumber, topupamount)
 
 		}
 	case 7:
@@ -72,7 +80,11 @@ func main() {
 		}
 	case 8:
 		{
+			user := entities.Users{}
+			fmt.Println("\nEnter Id to look TopUp History:")
+			fmt.Scanln(&user.Id)
 
+			controllers.TopUpHistory(dbConnection, user)
 		}
 	case 9:
 		{
