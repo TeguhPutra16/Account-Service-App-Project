@@ -9,18 +9,22 @@ import (
 )
 
 func Addaccount(db *sql.DB, insert entities.Users) error {
+
+	///Password yang diinput akan dienkripsi dengan package Bcrypt
 	x := Bcript(insert.Password)
 	insert.Password = x
+
+	///Proses insert data ke tabel Users//////////////////////////////////////////////////////////////////////////
+
 	var query = "insert into users (name,email,password,address,telp_number,balance,gender) values (?,?,?,?,?,?,?)"
 	statement, errPrepare := db.Prepare(query)
 	if errPrepare != nil {
-		// log.Fatal("error prepare insert", errPrepare.Error())
+
 		return errPrepare
 	}
-
 	result, errExec := statement.Exec(insert.Name, insert.Email, insert.Password, insert.Address, insert.Telp_number, insert.Balance, insert.Gender)
 	if errExec != nil {
-		// log.Fatal("error exec insert", errExec.Error())
+
 		return errExec
 	} else {
 		row, _ := result.RowsAffected()
@@ -32,6 +36,7 @@ func Addaccount(db *sql.DB, insert entities.Users) error {
 	}
 	return nil
 }
+
 func Bcript(y string) string {
 	password := []byte(y)
 

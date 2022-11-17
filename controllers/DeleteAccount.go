@@ -8,14 +8,18 @@ import (
 
 func DeleteAccount(db *sql.DB, read int, yesNo string) error {
 
+	//Konfirmasi delete Account
 	if yesNo == "n" {
-		return nil
+		return nil // kembali ke menu
 	} else if yesNo == "y" {
-
+		/// Proses dilanjutkan
 	} else {
 		fmt.Println("Submit error")
-		os.Exit(1)
+		os.Exit(1) // keluar sistem
 	}
+
+	/// Proses Delete Account
+	///Variable read adalah data user id yang diambil dari fungsi login
 	var query = "DELETE FROM users where id=?"
 	statement, errPrepare := db.Prepare(query)
 	if errPrepare != nil {
