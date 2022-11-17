@@ -117,7 +117,6 @@ func main() {
 							}
 						case 5:
 							{
-								var id int
 								var nomor1 string
 								var Jum_Tf int
 
@@ -126,7 +125,7 @@ func main() {
 								fmt.Println("Transfer amount:")
 								fmt.Scanln(&Jum_Tf)
 
-								controllers.Transfer(dbConnection, id, nomor1, Jum_Tf)
+								controllers.Transfer(dbConnection, read, nomor1, Jum_Tf)
 							}
 						case 6:
 							{

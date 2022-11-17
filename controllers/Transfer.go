@@ -13,7 +13,7 @@ func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
 	result0 := db.QueryRow("SELECT telp_number FROM users where id=?", id)
 
 	var no_kirim entities.Users
-	errScan0 := result0.Scan(&id)
+	errScan0 := result0.Scan(&no_kirim.Telp_number)
 	if errScan0 != nil {
 		if errScan0 == sql.ErrNoRows {
 			log.Fatal("Sender Id does not exist")
