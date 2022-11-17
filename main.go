@@ -55,7 +55,7 @@ func main() {
 				fmt.Scanln(&pass)
 
 				read, errLogin := controllers.LoginAccount(dbConnection, loginAccount, pass)
-
+				////Data User id saat login ditampung di variabel read
 				if errLogin != nil {
 					log.Fatal("Login Failed")
 				} else {
@@ -141,12 +141,8 @@ func main() {
 							}
 						case 7:
 							{
-								history := entities.Users{}
-
-								fmt.Println("Enter user id")
-								fmt.Scanln(&history.Id)
-
-								cek := controllers.TransferHistory(dbConnection, history)
+								////
+								cek := controllers.TransferHistory(dbConnection, read)
 								if len(cek) == 0 {
 									log.Fatal("History not Found")
 								}

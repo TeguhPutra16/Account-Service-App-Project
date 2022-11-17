@@ -14,5 +14,5 @@ func ReadAnotherUserProfile(db *sql.DB, readUser entities.Users) {
 	if errScan != nil {
 		log.Fatal("User not found, check id", errScan.Error())
 	}
-	fmt.Printf("\nUser profile:\nId: %d\nName: %s\nGender: %s\nAddress: %s\nEmail: %s\n", readUser.Id, readUser.Name, readUser.Gender, readUser.Address, readUser.Email)
+	fmt.Printf("===================\nUser profile:\nId: %d\nName: %s\nGender: %s\nAddress: %s\nEmail: %s\n===================", readUser.Id, readUser.Name, readUser.Gender, readUser.Address, readUser.Email)
 }

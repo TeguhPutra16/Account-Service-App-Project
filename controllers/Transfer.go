@@ -9,6 +9,7 @@ import (
 
 func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
 
+	//////////////////////Mengambil data no telepon pengirim///////////////////////////
 	result0 := db.QueryRow("SELECT telp_number FROM users where id=?", id)
 
 	var no_kirim entities.Users
@@ -34,7 +35,7 @@ func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
 			log.Fatal("eror scan", errScan.Error())
 		}
 	}
-
+	//////////////////////////////////Pengecekan saldo pengirim///////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////////
 	if pengirim.Balance-jumlahTf < 0 {
 		log.Fatal("Not Enough Balance")
@@ -55,7 +56,7 @@ func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////TAMBAH SALDO PENERIMA////////////////////////////
+	/////////////////////////////////TAMBAH SALDO PENERIMA////////////////////////////
 
 	var query = "UPDATE users set balance=? where telp_number=?"
 	statement, errPrepare := db.Prepare(query)

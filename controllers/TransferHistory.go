@@ -7,8 +7,8 @@ import (
 	"log"
 )
 
-func TransferHistory(db *sql.DB, user entities.Users) []entities.Users {
-	result, errSelect := db.Query("select users.id ,users.name,transactions_tf.transaction_name,transactions_tf.id,transfers.transfer_amount,u.name,transactions_tf.created_at from users inner join transactions_tf on users.id=transactions_tf.user_id inner join transfers on transactions_tf.id=transfers.transaction_tf_id inner join users u on u.id=transfers.user_id where users.id=?", user.Id)
+func TransferHistory(db *sql.DB, user int) []entities.Users {
+	result, errSelect := db.Query("select users.id ,users.name,transactions_tf.transaction_name,transactions_tf.id,transfers.transfer_amount,u.name,transactions_tf.created_at from users inner join transactions_tf on users.id=transactions_tf.user_id inner join transfers on transactions_tf.id=transfers.transaction_tf_id inner join users u on u.id=transfers.user_id where users.id=?", user)
 	if errSelect != nil {
 		// return errSelect
 		// return nil, errSelect
