@@ -78,8 +78,6 @@ func main() {
 							{
 								updateAccount := entities.Users{}
 
-								fmt.Println("\nEnter the user id you want to update:")
-								fmt.Scanln(&updateAccount.Id)
 								fmt.Println("Enter name update:")
 								fmt.Scanln(&updateAccount.Name)
 								fmt.Println("Enter gender update (M/F):")
@@ -93,16 +91,11 @@ func main() {
 								fmt.Println("Enter password update:")
 								fmt.Scanln(&updateAccount.Password)
 
-								controllers.UpdateAccount(dbConnection, updateAccount)
+								controllers.UpdateAccount(dbConnection, updateAccount, read)
 							}
 						case 3:
 							{
-								delete := entities.Users{}
-
-								fmt.Println("Enter user id you want to delete:")
-								fmt.Scanln(&delete.Id)
-
-								errdelete := controllers.DeleteAccount(dbConnection, delete)
+								errdelete := controllers.DeleteAccount(dbConnection, read)
 								if errdelete != nil {
 									fmt.Println("Delete Failed")
 								}

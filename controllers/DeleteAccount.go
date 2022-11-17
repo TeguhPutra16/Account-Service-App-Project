@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"be13/project/entities"
 	"database/sql"
 	"fmt"
+	"log"
 )
 
-func DeleteAccount(db *sql.DB, delete entities.Users) error {
+func DeleteAccount(db *sql.DB, read int) error {
 	var query = "DELETE FROM users where id=?"
 	statement, errPrepare := db.Prepare(query)
 	if errPrepare != nil {
@@ -14,14 +14,14 @@ func DeleteAccount(db *sql.DB, delete entities.Users) error {
 		return errPrepare
 	}
 
-	result, errExec := statement.Exec(delete.Id)
+	result, errExec := statement.Exec(read)
 	if errExec != nil {
 
 		return errExec
 	} else {
 		row, _ := result.RowsAffected()
 		if row > 0 {
-			fmt.Println("Account has been Successfully Deleted")
+			log.Fatal("success delete")
 		} else {
 			fmt.Println("Failed to Delete Account")
 		}
