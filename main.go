@@ -14,8 +14,8 @@ func main() {
 	dbConnection := config.Connection()
 
 	for {
-		fmt.Println("\nMENU:\n1. ADD ACCOUNT\n2. LOGIN\n0. Exit")
-		fmt.Println("\nEnter your choice: ")
+		fmt.Println("\nMENU:\n1. ADD ACCOUNT\n2. LOGIN\n0. EXIT")
+		fmt.Println("\nCHOOSE YOUR MENU: ")
 		var pilihan int
 		fmt.Scanln(&pilihan)
 
@@ -41,7 +41,7 @@ func main() {
 
 				err := controllers.Addaccount(dbConnection, addAccount)
 				if err != nil {
-					log.Fatal("Failed to create Account")
+					log.Fatal("Fail to create Account")
 				}
 			}
 		case 2:
@@ -49,7 +49,7 @@ func main() {
 				loginAccount := entities.Users{}
 				var pass string
 
-				fmt.Println("\nEnter your Telp number:")
+				fmt.Println("\nEnter your Phone number:")
 				fmt.Scanln(&loginAccount.Telp_number)
 				fmt.Println("Enter your Password:")
 				fmt.Scanln(&pass)
@@ -61,7 +61,7 @@ func main() {
 				} else {
 					for {
 						fmt.Println()
-						fmt.Println("Menu: \n1. READ ACCOUNT\n2. UPDATE ACCOUNT\n3. DELETE ACCOUT\n4. TOP UP\n5. TRANSFER\n6. TOP UP HISTORY\n7. TRANSFER HISTORY\n8. READ ANOTHER USER PROFILE\n0. EXIT")
+						fmt.Println("Menu: \n1. READ ACCOUNT\n2. UPDATE ACCOUNT\n3. DELETE ACCOUNT\n4. TOP UP\n5. TRANSFER\n6. TOP UP HISTORY\n7. TRANSFER HISTORY\n8. READ ANOTHER USER PROFILE\n0. EXIT")
 						fmt.Println("\nChoose Menu: ")
 						var pilihan int
 						fmt.Scanln(&pilihan)
@@ -95,7 +95,10 @@ func main() {
 							}
 						case 3:
 							{
-								errdelete := controllers.DeleteAccount(dbConnection, read)
+								var submit string
+								fmt.Println("Are you sure? all information will be deleted (y/n)")
+								fmt.Scanln(&submit)
+								errdelete := controllers.DeleteAccount(dbConnection, read, submit)
 								if errdelete != nil {
 									fmt.Println("Delete Failed")
 								}
@@ -114,17 +117,15 @@ func main() {
 							}
 						case 5:
 							{
-								var nomor, nomor1 string
+								var nomor1 string
 								var Jum_Tf int
 
-								fmt.Println("\nEnter your Phone number:")
-								fmt.Scanln(&nomor)
 								fmt.Println("Enter recipient number:")
 								fmt.Scanln(&nomor1)
 								fmt.Println("Transfer amount:")
 								fmt.Scanln(&Jum_Tf)
 
-								controllers.Transfer(dbConnection, nomor, nomor1, Jum_Tf)
+								controllers.Transfer(dbConnection, read, nomor1, Jum_Tf)
 							}
 						case 6:
 							{
