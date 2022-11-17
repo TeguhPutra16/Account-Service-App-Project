@@ -15,7 +15,7 @@ func main() {
 
 	for {
 		fmt.Println("\nMENU:\n1. ADD ACCOUNT\n2. LOGIN\n0. Exit")
-		fmt.Println("\nMasukkan pilihan anda: ")
+		fmt.Println("\nEnter your choice: ")
 		var pilihan int
 		fmt.Scanln(&pilihan)
 
@@ -168,7 +168,6 @@ func main() {
 						case 0:
 							{
 								controllers.Exit()
-
 							}
 
 						}
@@ -181,6 +180,5 @@ func main() {
 		case 0:
 			controllers.Exit()
 		}
-
 	}
 }

@@ -14,6 +14,8 @@ func UpdateAccount(db *sql.DB, updateAccount entities.Users) {
 	if errPrepare != nil {
 		log.Fatal("error prepare update", errPrepare.Error())
 	}
+	y := Bcript(updateAccount.Password)
+	updateAccount.Password = y
 
 	result, errExec := statement.Exec(updateAccount.Name, updateAccount.Gender, updateAccount.Address, updateAccount.Email, updateAccount.Telp_number, updateAccount.Password, updateAccount.Id)
 	if errExec != nil {

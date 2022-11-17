@@ -20,7 +20,7 @@ func BalanceTopUp(db *sql.DB, topupuserNumber string, topupamount int) {
 		}
 	}
 	if topupUser.Balance-topupamount < 0 {
-		fmt.Println("no balance")
+		fmt.Println("")
 	}
 
 	// penambahan saldo setelah di topup
