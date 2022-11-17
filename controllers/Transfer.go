@@ -7,10 +7,23 @@ import (
 	"log"
 )
 
-func Transfer(db *sql.DB, noTelp_kirim, noTelp_terima string, jumlahTf int) string {
+func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
+
+	result0 := db.QueryRow("SELECT telp_number FROM users where id=?", id)
+
+	var no_kirim entities.Users
+	errScan0 := result0.Scan(&no_kirim.Telp_number)
+	if errScan0 != nil {
+		if errScan0 == sql.ErrNoRows {
+			log.Fatal("Sender Id does not exist")
+		} else {
+			log.Fatal("eror scan", errScan0.Error())
+		}
+	}
+
 	///////////////////////////////////SALDO PENGIRIM//////////////////////////////////////////////////////////
 
-	result := db.QueryRow("SELECT id,balance FROM users where telp_number=?", noTelp_kirim)
+	result := db.QueryRow("SELECT id,balance FROM users where telp_number=?", no_kirim.Telp_number)
 
 	var pengirim entities.Users
 	errScan := result.Scan(&pengirim.Id, &pengirim.Balance)
@@ -24,7 +37,7 @@ func Transfer(db *sql.DB, noTelp_kirim, noTelp_terima string, jumlahTf int) stri
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 	if pengirim.Balance-jumlahTf < 0 {
-		log.Fatal("Less Balance")
+		log.Fatal("Not Enough Balance")
 	}
 	////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////SALDO PENERIMA//////////////////////////////////
@@ -78,7 +91,7 @@ func Transfer(db *sql.DB, noTelp_kirim, noTelp_terima string, jumlahTf int) stri
 
 	current_balance1 := pengirim.Balance - jumlahTf
 
-	result3, errExec := statement1.Exec(current_balance1, noTelp_kirim)
+	result3, errExec := statement1.Exec(current_balance1, no_kirim.Telp_number)
 	if errExec != nil {
 		log.Fatal("error exec insert", errExec.Error())
 		// return errExec
