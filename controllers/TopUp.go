@@ -7,9 +7,20 @@ import (
 	"log"
 )
 
-func BalanceTopUp(db *sql.DB, topupuserNumber string, topupamount int) {
+func BalanceTopUp(db *sql.DB, id int, topupamount int) string {
+	result0 := db.QueryRow("select telp_number from users where id = ?", id)
+
+	var topupuserNumber entities.Users
+	errScan0 := result0.Scan(&topupuserNumber.Telp_number)
+	if errScan0 != nil {
+		if errScan0 == sql.ErrNoRows {
+			log.Fatal("Sender Id does not exist")
+		} else {
+			log.Fatal("eror scan", errScan0.Error())
+		}
+	}
 	// cek id dan balance dari user sebelum topup dengan telp number
-	result := db.QueryRow("select id, balance from users where telp_number = ?", topupuserNumber)
+	result := db.QueryRow("select id, balance from users where telp_number = ?", topupuserNumber.Telp_number)
 	var topupUser entities.Users
 	errScan := result.Scan(&topupUser.Id, &topupUser.Balance)
 	if errScan != nil {
@@ -32,7 +43,7 @@ func BalanceTopUp(db *sql.DB, topupuserNumber string, topupamount int) {
 
 	balanceAfterTopUp := topupUser.Balance + topupamount
 
-	result2, errExec := statement.Exec(balanceAfterTopUp, topupuserNumber)
+	result2, errExec := statement.Exec(balanceAfterTopUp, topupuserNumber.Telp_number)
 	if errExec != nil {
 		log.Fatal("error exec insert", errExec.Error())
 	} else {
@@ -82,4 +93,5 @@ func BalanceTopUp(db *sql.DB, topupuserNumber string, topupamount int) {
 			fmt.Println("")
 		}
 	}
+	return ""
 }
