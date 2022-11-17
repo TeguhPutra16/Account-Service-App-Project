@@ -33,6 +33,6 @@ func LoginAccount(db *sql.DB, loginAccount entities.Users, pass string) (int, er
 		log.Fatal("User not found, check your Telp number and Password again")
 		os.Exit(2)
 	}
-	fmt.Printf("\n==============================\nWelcome to Your Account %s\n============================== ", loginAccount.Name)
+	fmt.Printf("\n==================================================\nWelcome to Your Account %s\n==================================================", loginAccount.Name)
 	return loginAccount.Id, nil
 }

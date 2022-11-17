@@ -14,8 +14,8 @@ func main() {
 	dbConnection := config.Connection()
 
 	for {
-		fmt.Println("\nMENU:\n1. ADD ACCOUNT\n2. LOGIN\n0. EXIT")
-		fmt.Println("\nCHOOSE YOUR MENU: ")
+		fmt.Println("\nMENU:\n1. ADD ACCOUNT\n2. LOGIN\n0. Exit")
+		fmt.Println("\nEnter your choice: ")
 		var pilihan int
 		fmt.Scanln(&pilihan)
 
@@ -41,7 +41,7 @@ func main() {
 
 				err := controllers.Addaccount(dbConnection, addAccount)
 				if err != nil {
-					log.Fatal("Fail to create Account")
+					log.Fatal("Failed to create Account")
 				}
 			}
 		case 2:
@@ -49,7 +49,7 @@ func main() {
 				loginAccount := entities.Users{}
 				var pass string
 
-				fmt.Println("\nEnter your Phone number:")
+				fmt.Println("\nEnter your Telp number:")
 				fmt.Scanln(&loginAccount.Telp_number)
 				fmt.Println("Enter your Password:")
 				fmt.Scanln(&pass)
@@ -61,7 +61,7 @@ func main() {
 				} else {
 					for {
 						fmt.Println()
-						fmt.Println("Menu: \n1. READ ACCOUNT\n2. UPDATE ACCOUNT\n3. DELETE ACCOUNT\n4. TOP UP\n5. TRANSFER\n6. TOP UP HISTORY\n7. TRANSFER HISTORY\n8. READ ANOTHER USER PROFILE\n0. EXIT")
+						fmt.Println("Menu: \n1. READ ACCOUNT\n2. UPDATE ACCOUNT\n3. DELETE ACCOUT\n4. TOP UP\n5. TRANSFER\n6. TOP UP HISTORY\n7. TRANSFER HISTORY\n8. READ ANOTHER USER PROFILE\n0. EXIT")
 						fmt.Println("\nChoose Menu: ")
 						var pilihan int
 						fmt.Scanln(&pilihan)
@@ -71,7 +71,7 @@ func main() {
 
 								v := controllers.ReadAccount(dbConnection, read)
 
-								fmt.Printf("\n\n===================\nUser Id: %d\nName: %s\nEmail: %s\nUser Balance: %d\nAddress: %s\nGender: %s\nTelephone:%s\n===================", v.Id, v.Name, v.Email, v.Balance, v.Address, v.Gender, v.Telp_number)
+								fmt.Printf("\n\n==================================================\nUser Id: %d\nName: %s\nEmail: %s\nGender: %s\nAddress: %s\nUser Balance: %d\nTelephone: %s\nCreated at: %s\nUpdated at: %s\n==================================================\n\n", v.Id, v.Name, v.Email, v.Gender, v.Address, v.Balance, v.Telp_number, v.Created_at, v.Updated_at)
 
 							}
 						case 2:
@@ -95,10 +95,10 @@ func main() {
 							}
 						case 3:
 							{
-								var submit string
-								fmt.Println("Are you sure? all information will be deleted (y/n)")
-								fmt.Scanln(&submit)
-								errdelete := controllers.DeleteAccount(dbConnection, read, submit)
+								var yesNo string
+								fmt.Println("Are you sure to delete account? (y/n)")
+								fmt.Scanln(&yesNo)
+								errdelete := controllers.DeleteAccount(dbConnection, read, yesNo)
 								if errdelete != nil {
 									fmt.Println("Delete Failed")
 								}
@@ -117,6 +117,7 @@ func main() {
 							}
 						case 5:
 							{
+								var id int
 								var nomor1 string
 								var Jum_Tf int
 
@@ -125,7 +126,7 @@ func main() {
 								fmt.Println("Transfer amount:")
 								fmt.Scanln(&Jum_Tf)
 
-								controllers.Transfer(dbConnection, read, nomor1, Jum_Tf)
+								controllers.Transfer(dbConnection, id, nomor1, Jum_Tf)
 							}
 						case 6:
 							{
@@ -168,7 +169,9 @@ func main() {
 
 			}
 		case 0:
-			controllers.Exit()
+			{
+				controllers.Exit()
+			}
 		}
 	}
 }
