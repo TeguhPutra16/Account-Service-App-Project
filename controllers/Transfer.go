@@ -7,9 +7,9 @@ import (
 	"log"
 )
 
-func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
+func Transfer(db *sql.DB, id int, noTelp_terima, noTelp_kirim string, jumlahTf int) string {
 
-	//////////////////////Mengambil data no telepon pengirim///////////////////////////
+	//////Mengambil data no telepon pengirim dengan menggunakan user id dari fungsi login///////////////////////////////
 	result0 := db.QueryRow("SELECT telp_number FROM users where id=?", id)
 
 	var no_kirim entities.Users
@@ -21,13 +21,22 @@ func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
 			log.Fatal("eror scan", errScan0.Error())
 		}
 	}
+	/////Konfirmasi nomor pemgirim jika salah akan kembali ke menu////////////////////////////////////////////////////////////////////////////
+	if noTelp_kirim == no_kirim.Telp_number {
 
-	///////////////////////////////////SALDO PENGIRIM//////////////////////////////////////////////////////////
+	} else {
 
-	result := db.QueryRow("SELECT id,balance FROM users where telp_number=?", no_kirim.Telp_number)
+		fmt.Println("==============================\nyour phone number is incorrect\nPlease Try again\n==============================")
+		return ""
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////MENGAMBIL DATA SALDO PENGIRIM//////////////////////////////////////////////////////////
+
+	result := db.QueryRow("SELECT balance FROM users where id=?", id)
 
 	var pengirim entities.Users
-	errScan := result.Scan(&pengirim.Id, &pengirim.Balance)
+	errScan := result.Scan(&pengirim.Balance)
 	if errScan != nil {
 		if errScan == sql.ErrNoRows {
 			log.Fatal("Sender Id does not exist")
@@ -41,7 +50,7 @@ func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
 		log.Fatal("Not Enough Balance")
 	}
 	////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////SALDO PENERIMA//////////////////////////////////
+	///////////////////////////////////AMBIL DATA SALDO PENERIMA//////////////////////////////////
 	result1 := db.QueryRow("SELECT id,balance FROM users where telp_number=?", noTelp_terima)
 
 	var penerima entities.Users
@@ -56,7 +65,7 @@ func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////TAMBAH SALDO PENERIMA////////////////////////////
+	/////////////////////////////////TAMBAH SALDO PENERIMA/////////////////////////////////////
 
 	var query = "UPDATE users set balance=? where telp_number=?"
 	statement, errPrepare := db.Prepare(query)
@@ -74,8 +83,7 @@ func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
 	} else {
 		row, _ := result2.RowsAffected()
 		if row > 0 {
-			// fmt.Println("Transfer berhasil diterima oleh Nomor :", noTelp_terima)
-			// return ""
+			//lanjut"
 		} else {
 			fmt.Println("Add Balance Failed")
 		}
@@ -83,7 +91,7 @@ func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////KURANG SALDO PENGIRIM///////////////////////////////
-	var query1 = "UPDATE users set balance=? where telp_number=?"
+	var query1 = "UPDATE users set balance=? where id=?"
 	statement1, errPrepare1 := db.Prepare(query1)
 	if errPrepare1 != nil {
 		log.Fatal("error prepare1", errPrepare1.Error())
@@ -92,21 +100,21 @@ func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
 
 	current_balance1 := pengirim.Balance - jumlahTf
 
-	result3, errExec := statement1.Exec(current_balance1, no_kirim.Telp_number)
+	result3, errExec := statement1.Exec(current_balance1, id)
 	if errExec != nil {
 		log.Fatal("error exec insert", errExec.Error())
 		// return errExec
 	} else {
 		row, _ := result3.RowsAffected()
 		if row > 0 {
-			// fmt.Println("kurang saldo pengirim")
+			//lanjut
 
 		} else {
 			log.Fatal("Transfer Failed")
 		}
 	}
 
-	/////////////////////////////////////////////////////INSERT KE TRANSAKSI///////////////////////
+	///////////////////////////INSERT user id(pengirim) dan jenis transaksi KE tabel TRANSAKSI///////////////////////
 	var query2 = "insert into transactions_tf (user_id,transaction_name) values (?,?)"
 	statement2, errPrepare2 := db.Prepare(query2)
 	if errPrepare2 != nil {
@@ -114,20 +122,20 @@ func Transfer(db *sql.DB, id int, noTelp_terima string, jumlahTf int) string {
 		// return errPrepare2
 	}
 
-	result4, errExec := statement2.Exec(pengirim.Id, "Transfer")
+	result4, errExec := statement2.Exec(id, "Transfer")
 	if errExec != nil {
 		log.Fatal("error exec insert", errExec.Error())
 		// return errExec
 	} else {
 		row, _ := result4.RowsAffected()
 		if row > 0 {
-			// fmt.Println("Transfer berhasil diterima oleh Nomor :", noTelp_terima)
+			//lanjut
 
 		} else {
 			fmt.Println("Failed to Add Account")
 		}
 	}
-	////////////////////////////////////////////////////Insert ke Tabel Transfer///////////////////////////
+	///////////////////////////////Insert user id(penerima) ke Tabel Transfer///////////////////////////
 	var query3 = "insert into transfers (user_id,transfer_amount) values (?,?)"
 	statement3, errPrepare3 := db.Prepare(query3)
 	if errPrepare3 != nil {

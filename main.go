@@ -117,15 +117,17 @@ func main() {
 							}
 						case 5:
 							{
-								var nomor1 string
+								var nomor1, nomor2 string
 								var Jum_Tf int
 
+								fmt.Println("Confirm your phone number:")
+								fmt.Scanln(&nomor2)
 								fmt.Println("Enter recipient number:")
 								fmt.Scanln(&nomor1)
 								fmt.Println("Transfer amount:")
 								fmt.Scanln(&Jum_Tf)
 
-								controllers.Transfer(dbConnection, read, nomor1, Jum_Tf)
+								controllers.Transfer(dbConnection, read, nomor1, nomor2, Jum_Tf)
 							}
 						case 6:
 							{
