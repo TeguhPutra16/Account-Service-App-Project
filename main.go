@@ -112,28 +112,17 @@ func main() {
 							}
 						case 5:
 							{
-<<<<<<< HEAD
-								var nomor1 string
-								var Jum_Tf int
-
-								fmt.Println("Enter recipient Telp Number:")
-=======
 								var nomor1, nomor2 string
 								var Jum_Tf int
 
 								fmt.Println("Confirm your phone number:")
 								fmt.Scanln(&nomor2)
 								fmt.Println("Enter recipient number:")
->>>>>>> 785e58d324fedd65f9290f6d117db440d6d64ec8
 								fmt.Scanln(&nomor1)
 								fmt.Println("Transfer amount:")
 								fmt.Scanln(&Jum_Tf)
 
-<<<<<<< HEAD
-								controllers.Transfer(dbConnection, read, nomor1, Jum_Tf)
-=======
 								controllers.Transfer(dbConnection, read, nomor1, nomor2, Jum_Tf)
->>>>>>> 785e58d324fedd65f9290f6d117db440d6d64ec8
 							}
 						case 6:
 							{
@@ -144,10 +133,6 @@ func main() {
 							}
 						case 7:
 							{
-<<<<<<< HEAD
-=======
-								////
->>>>>>> 785e58d324fedd65f9290f6d117db440d6d64ec8
 								cek := controllers.TransferHistory(dbConnection, read)
 								if len(cek) == 0 {
 									log.Fatal("History not Found")

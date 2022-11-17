@@ -8,11 +8,8 @@ import (
 )
 
 func TransferHistory(db *sql.DB, user int) []entities.Users {
-<<<<<<< HEAD
-=======
 
 	///////////Proses Mengambil data-data mengenai Transaksi transfer//////////////////
->>>>>>> 785e58d324fedd65f9290f6d117db440d6d64ec8
 	result, errSelect := db.Query("select users.id ,users.name,transactions_tf.transaction_name,transactions_tf.id,transfers.transfer_amount,u.name,transactions_tf.created_at from users inner join transactions_tf on users.id=transactions_tf.user_id inner join transfers on transactions_tf.id=transfers.transaction_tf_id inner join users u on u.id=transfers.user_id where users.id=?", user)
 	if errSelect != nil {
 
