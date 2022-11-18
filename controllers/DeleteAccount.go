@@ -3,6 +3,7 @@ package controllers
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -34,7 +35,7 @@ func DeleteAccount(db *sql.DB, read int, yesNo string) error {
 	} else {
 		row, _ := result.RowsAffected()
 		if row > 0 {
-			fmt.Println("Account has been successfully deleted")
+			log.Println("Account has been successfully deleted")
 		} else {
 			fmt.Println("Failed to Delete Account")
 		}

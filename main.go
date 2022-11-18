@@ -59,10 +59,16 @@ func main() {
 				} else {
 					for {
 						fmt.Println()
-						fmt.Println("Menu: \n1. READ ACCOUNT\n2. UPDATE ACCOUNT\n3. DELETE ACCOUT\n4. TOP UP\n5. TRANSFER\n6. TOP UP HISTORY\n7. TRANSFER HISTORY\n8. READ ANOTHER USER PROFILE\n0. EXIT")
+						fmt.Println("Menu: \n1. READ ACCOUNT\n2. UPDATE ACCOUNT\n3. DELETE ACCOUT\n4. TOP UP\n5. TRANSFER\n6. TOP UP HISTORY\n7. TRANSFER HISTORY\n8. READ ANOTHER USER PROFILE\n0. LOGOUT")
 						fmt.Println("\nChoose Menu: ")
 						var pilihan int
+
 						fmt.Scanln(&pilihan)
+
+						fmt.Println("==================================================\nYour account have been logged out please login again !\n==================================================")
+						if pilihan == 0 {
+							break
+						}
 						switch pilihan {
 						case 1:
 							{
@@ -145,10 +151,6 @@ func main() {
 								fmt.Scanln(&readUser.Telp_number)
 
 								controllers.ReadAnotherUserProfile(dbConnection, readUser)
-							}
-						case 0:
-							{
-								controllers.Exit()
 							}
 
 						}
