@@ -7,7 +7,7 @@ Account Service App adalah aplikasi CLI yang digunakan untuk management sebuah a
 ```
 git clone https://github.com/TeguhPutra16/Account-Service-App-Project.git
 ```
-- Ubah nama .env example menjadi .env
+- Ubah nama `.env example` menjadi `.env`
 - Dalam .env ubah `YourMYSQLPassword` jadi password MySQL anda dan `DATABASENAME` jadi nama database yang anda punya contoh:
 ```
 export DB_CONNECTION="root:qwert123@tcp(127.0.0.1:3306)/account_service_app?parseTime=true"
